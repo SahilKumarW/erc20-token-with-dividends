@@ -1,42 +1,81 @@
-# Tech interview smart contracts coding problem
+# ERC20 Token with Dividends
 
-This is a Solidity coding problem for tech interviews. It is designed to take **no more than a few hours**.
+Mintable/burnable ERC-20 token backed 1:1 by ETH with pro-rata dividend distribution
 
-## Getting setup
+## Overview
+A mintable/burnable ERC-20 token that is backed 1:1 by ETH (similar to Wrapped ETH) with automatic pro-rata dividend distribution to token holders.
 
-Ensure you have installed:
+## Features
 
-- [Node.js](https://nodejs.org/) **v20+**
-- [Hardhat](https://hardhat.org/) (already included as a dev dependency)
+### Token Operations
+- **Mint**: Deposit ETH to mint an equal amount of tokens (1 wei ETH = 1 token)
+- **Burn**: Burn tokens to receive the equivalent amount of ETH back
+- **Transfer**: Standard ERC-20 transfers with allowance/approval support
 
-## Instructions
+### Dividend System
+- **Record Dividends**: Deposit ETH which is distributed proportionally to all current token holders
+- **Withdraw Dividends**: Claim accumulated dividends even after transferring or burning tokens
+- **Persistent Dividends**: Dividends earned while holding tokens remain claimable forever
 
-### 1. Setup
+### Holder Tracking
+- Efficiently tracks current token holders using an array + mapping pattern
+- Updates holder list on mint, burn, and transfer operations
+- Uses swap-and-pop pattern for O(1) removal from holders array
 
-Clone the repo locally and install the NPM dependencies using npm:
+## Technical Details
 
-### 2. Task
+### Key Implementation Decisions
+1. **Holder Tracking**: Array of addresses + mapping for O(1) membership checks
+2. **Dividend Storage**: Separate mapping that persists after token transfers/burns
+3. **Gas Optimization**: Loop through holders array for dividend distribution
+4. **Security**: SafeMath for arithmetic operations
 
-**You only need to write code in the `Token.sol` file. Please ensure all the unit tests pass to successfully complete this part.**
+### Interfaces Implemented
+- `IERC20` - Standard ERC-20 token interface
+- `IMintableToken` - Minting and burning capabilities
+- `IDividends` - Dividend distribution and withdrawal
 
-The contracts consist of a mintable ERC-20 `Token` (which is similar to a _Wrapped ETH_ token). Callers mint tokens by depositing ETH. They can then burn their token balance to get the equivalent amount of deposited ETH back.
+## Testing
 
-In addition, token holders can receive dividend payments in ETH in proportion to their token balance relative to the total supply. Dividends are assigned by looping through the list of holders.
+All 11 tests pass successfully.
 
-Dividend payments are assigned to token holders' addresses. This means that even if a token holder were to send their tokens to somebody else later on or burn their tokens, they would still be entitled to the dividends they accrued whilst they were holding the tokens. 
+--------------------------------------------
+npm run test
 
-You will thus need to **efficiently** keep track of individual token holder addresses in order to assign dividend payouts to holders with minimal gas cost.
+Contract: Token
+✓ has default values
+✓ can be minted
+✓ can be burnt
+once minted
+✓ can be transferred directly
+✓ can be transferred indirectly
+can record dividends
+✓ and disallows empty dividend
+✓ and keeps track of holders when minting and burning
+✓ and keeps track of holders when transferring
+✓ and compounds the payouts
+✓ and allows for withdrawals in-between payouts
+✓ and allows for withdrawals even after holder relinquishes tokens
 
-For a clearer understanding of how the code is supposed to work please refer to the tests in the `test` folder.
+11 passing
 
-Your Solution must pass the test: `npm run test` - run the tests (Hardhat)
 
-![Test Result](./test-result.png)
+## How to Run
 
-### 3: Submission
+### Prerequisites
+- Node.js
+- npm
 
-Record a short [Loom video](https://www.loom.com) showing how it works, including the expected and actual behavior if you're testing.
+### Installation
+```bash
+npm install
 
-### 4. Deadline
+### Run Tests
+```bash
+npm run test
 
-Please complete and submit the result within 1 ~ 2 hours unless otherwise discussed.
+### License
+MIT
+
+### Author
+Sahil
