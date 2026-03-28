@@ -37,28 +37,27 @@ A mintable/burnable ERC-20 token that is backed 1:1 by ETH (similar to Wrapped E
 
 ## Testing
 
-All 11 tests pass successfully.
+All 11 tests pass successfully:
 
---------------------------------------------
-npm run test
+```bash
+$ npm run test
 
 Contract: Token
-✓ has default values
-✓ can be minted
-✓ can be burnt
-once minted
-✓ can be transferred directly
-✓ can be transferred indirectly
-can record dividends
-✓ and disallows empty dividend
-✓ and keeps track of holders when minting and burning
-✓ and keeps track of holders when transferring
-✓ and compounds the payouts
-✓ and allows for withdrawals in-between payouts
-✓ and allows for withdrawals even after holder relinquishes tokens
+  ✓ has default values
+  ✓ can be minted
+  ✓ can be burnt
+  once minted
+    ✓ can be transferred directly
+    ✓ can be transferred indirectly
+    can record dividends
+      ✓ and disallows empty dividend
+      ✓ and keeps track of holders when minting and burning
+      ✓ and keeps track of holders when transferring
+      ✓ and compounds the payouts
+      ✓ and allows for withdrawals in-between payouts
+      ✓ and allows for withdrawals even after holder relinquishes tokens
 
 11 passing
-
 
 ## How to Run
 
@@ -74,8 +73,8 @@ npm install
 ```bash
 npm run test
 
-### License
+## License
 MIT
 
-### Author
+## Author
 Sahil
